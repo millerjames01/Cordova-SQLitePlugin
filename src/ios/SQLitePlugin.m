@@ -169,9 +169,11 @@ static void sqlite_regexp(sqlite3_context* context, int argc, sqlite3_value** va
         [openDBs retain];
 #endif
 
-        NSString *docs = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex: 0];
-        NSLog(@"Detected docs path: %@", docs);
-        [self setAppDocsPath:docs];
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask,  YES);
+	NSString *libraryDirectory = [paths objectAtIndex:0];
+	libraryDirectory = [libraryDirectory stringByAppendingString:@"/NoCloud"];
+	NSError *err = nil;
+	[self setAppDocsPath:libraryDirectory];
     }
     return self;
 }
